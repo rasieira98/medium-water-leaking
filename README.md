@@ -75,6 +75,8 @@ BEGIN
     FROM TABLE(RESULT_SCAN(:x));
 END;
 ```
+![image](https://github.com/rasieira98/medium-water-leaking/assets/116558787/84923ba7-4f49-4aa3-8738-9f9718922e8e)
+
 ## Implementación de Prophet en Python
 Además de utilizar las capacidades de Snowflake, implementamos un modelo de previsión con Prophet en Python para mejorar resultados. A continuación, se muestra el código para entrenar un modelo Prophet con los datos de Snowflake:
 
@@ -120,6 +122,8 @@ def main(session: snowpark.Session):
     
     return forecast_snowpark
 ```
+![image](https://github.com/rasieira98/medium-water-leaking/assets/116558787/f76a845e-9263-41d7-a75f-32652bdc68b6)
+
 ## Manejo de Datos Faltantes
 Para abordar el problema de los datos faltantes, creamos una vista que introduce huecos significativos en los datos y repetimos el proceso de previsión:
 ### Snowflake Cortex ML Functions 
@@ -177,6 +181,8 @@ END;
 SELECT * 
 FROM TIME_SERIES_SDG_EXAMPLES.PUBLIC.WATER_CONS_FORECAST_BIG_GAPS;
 ```
+![image](https://github.com/rasieira98/medium-water-leaking/assets/116558787/1f6174ff-62e0-4173-8c1c-ad5976bc4424)
+
 ### Implementación de Prophet en Python
 ```python
 import snowflake.snowpark as snowpark
@@ -220,6 +226,8 @@ def main(session: snowpark.Session):
     
     return forecast_snowpark
 ```
+![image](https://github.com/rasieira98/medium-water-leaking/assets/116558787/ea5303be-052d-4953-8e2e-a77c1fb0c85e)
+
 ## Generacion de Alertas por Fuga con el forecast de Prophet:
 ```python
 import snowflake.snowpark as snowpark
@@ -257,5 +265,6 @@ def main(session: snowpark.Session):
     
     return df
 ```
-## Visualizacion de resultados
+![image](https://github.com/rasieira98/medium-water-leaking/assets/116558787/40c03e82-a334-4b17-baae-084886104bcb)
+
 
