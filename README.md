@@ -1,6 +1,7 @@
 # Prediction of Water Consumption and Leak Alert Detection Using Snowflake and Prophet
 Efficient water consumption is a key goal in sustainable development. Advanced data analysis techniques and predictive modeling can play a crucial role in water resource management. In this article, we will explore how to use Snowflake Cortex ML Functions or Python's Prophet library to predict water consumption. The process will include generating the prediction and calculating leak alerts in the best model.
 
+## Implementation Snowflake ML Forecast
 ### Step 1: Group and Aggregate Data
 First, we need to prepare our data by grouping it and summing the water flow per day. We use the following SQL command to achieve this:
 
@@ -76,6 +77,8 @@ END;
 ```
 ![image](https://github.com/rasieira98/medium-water-leaking/assets/116558787/84923ba7-4f49-4aa3-8738-9f9718922e8e)
 
+In the image, we can observe 3 sections with 3 different colors. In yellow, we have the data used to train the model. In blue, we have the real data used for testing, and finally, in green, we have the flow, which is the prediction calculated by the time-series model generated with Snowflake ML Forecast. It can be observed that it is only capable of filling the future and not the past.
+
 ## Implementation with Prophet and Python
 In addition to utilizing Snowflake's capabilities, we implement a forecasting model with Prophet in Python to enhance results. Below is the code for training a Prophet model with the data from Snowflake:
 
@@ -122,6 +125,8 @@ def main(session: snowpark.Session):
     return forecast_snowpark
 ```
 ![image](https://github.com/rasieira98/medium-water-leaking/assets/116558787/f76a845e-9263-41d7-a75f-32652bdc68b6)
+
+In the image, we can observe 3 segments with 3 different colors. In yellow, we have the data used to train the model. In blue, we have the actual data used for testing, and finally, in green, we have the flow, which is the prediction calculated by the time-series model generated with Prophet. It can be observed that the model is capable of filling in the past, which is very useful in this case for future daily leak detection.
 
 ## Handling Missing Data (GAPs)
 To address the issue of missing data, we create a view that introduces significant gaps in the data and repeat the forecasting process:
@@ -182,6 +187,8 @@ FROM TIME_SERIES_SDG_EXAMPLES.PUBLIC.WATER_CONS_FORECAST_BIG_GAPS;
 ```
 ![image](https://github.com/rasieira98/medium-water-leaking/assets/116558787/1f6174ff-62e0-4173-8c1c-ad5976bc4424)
 
+In the image, we can observe 3 sections with 3 different colors. In yellow, we have the data used to train the model. In blue, we have the actual data used for testing, and finally, in green, we have the flow, which is the prediction calculated by the time-series model generated with Snowflake ML Forecast. It can be observed that it is not able to fill in the data gaps.
+
 ### Implementation with Prophet and Python
 ```python
 import snowflake.snowpark as snowpark
@@ -227,6 +234,8 @@ def main(session: snowpark.Session):
 ```
 ![image](https://github.com/rasieira98/medium-water-leaking/assets/116558787/ea5303be-052d-4953-8e2e-a77c1fb0c85e)
 
+In the image, we can observe 3 segments with 3 different colors. In yellow, we have the data used to train the model. In blue, we have the actual data used for testing, and finally, in green, we have the flow, which is the prediction calculated by the time-series model generated with Prophet. It can be observed that it is able to fill in the data gaps.
+
 ## Generating Leak Alerts with Prophet Forecast
 ```python
 import snowflake.snowpark as snowpark
@@ -266,5 +275,7 @@ def main(session: snowpark.Session):
     return df
 ```
 ![image](https://github.com/rasieira98/medium-water-leaking/assets/116558787/40c03e82-a334-4b17-baae-084886104bcb)
+
+In the image, we can observe 4 segments with 4 different colors. In yellow, we have the data used to train the model. In blue, we have the actual data used for testing. Thirdly, in green, we have the flow, which is the prediction calculated by the time-series model generated with Prophet. Finally, in red, we have the daily alerts.
 
 
